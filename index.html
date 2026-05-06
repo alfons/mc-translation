@@ -23,6 +23,15 @@
             color-scheme: auto;
         }
 
+        html,
+        body {
+            height: 100%;
+        }
+
+        .transcript-container {
+            overscroll-behavior: contain;
+        }
+
         @font-face {
             font-family: 'Crimson Text';
             src: url('./fonts/CrimsonText-Regular.ttf') format('truetype');
@@ -44,6 +53,7 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.1;
+
         }
 
         header {
@@ -237,6 +247,10 @@
 
         @media (max-width: 600px) {
 
+            .page {
+                padding: 0 0.5rem;
+            }
+
             header {
                 padding: 0.25rem;
             }
@@ -375,11 +389,11 @@
         </div>
 
         <div class="transcript-container" id="transcript"></div>
-    </div>
 
-    <div class="btn-container">
-        <button id="btn-prev">💾 Previous</button>
-        <button id="btn-next">🎲 Next</button>
+        <div class="btn-container">
+            <button id="btn-prev">💾 Previous</button>
+            <button id="btn-next">🎲 Next</button>
+        </div>
     </div>
 
     <div class="footer">
@@ -498,8 +512,11 @@
 
             const highlight = transcriptEl.querySelector('.highlight');
             if (highlight) {
-                highlight.scrollIntoView({ behavior: 'instant', block: 'start' });
-                transcriptEl.scrollTop -= 3;
+                const container = transcriptEl;
+                const rect = highlight.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+
+                container.scrollTop += rect.top - containerRect.top;
             }
         }
 
