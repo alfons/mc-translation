@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandarin Corner • Sentence Trainer</title>
+    <style>
+        :root {
+            --bg: #f8f5f0;
+            --text: #2c2c2c;
+            --accent: #c33711;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            color-scheme: auto;
+        }
+
+        @font-face {
+            font-family: 'Crimson Text';
+            src: url('./fonts/CrimsonText-Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: block;
+        }
+
+        @font-face {
+            font-family: 'Crimson Text';
+            src: url('./fonts/CrimsonText-SemiBold.ttf') format('truetype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: block;
+        }
+
+        body {
+            font-family: 'Crimson Text', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.1;
+        }
+
+        header {
+            background: white;
+            padding: 1.25rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            color: var(--accent);
+            font-size: 2.3rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .controls {
+            max-width: 50rem;
+            margin: 0 auto;
+            padding: 0.25rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.8rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        select {
+            font-family: 'Crimson Text', sans-serif;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: white;
+        }
+
+        /* Centered Button */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            gap: 0.75rem;
+        }
+
+        button {
+            background: #9C914F;
+            color: white;
+            border: none;
+            padding: 0.9rem 2.8rem;
+            font-size: 1.15rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #BEB7A4;
+        }
+
+        .transcript-container {
+            max-width: 900px;
+            margin: 1rem auto;
+            padding: 1rem 0;
+            background: white;
+            border-radius: 0 0 12px 12px;
+            box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+            max-height: 420px;
+            overflow-y: auto;
+        }
+
+        .page {
+            padding: 0 1rem;
+        }
+
+        .sentence {
+            padding: 1.1rem 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 1rem;
+            background: var(--bg);
+        }
+
+        .sentence:last-child {
+            border-bottom: none;
+            padding-bottom: 10rem;
+        }
+
+        .sentence.lowlight {
+            opacity: 0.5;
+        }
+
+        .sentence.highlight {
+            background: #fff8c3;
+            border-left: 5px solid var(--accent);
+        }
+
+        .line-number {
+            flex-shrink: 0;
+            color: #999;
+            font-weight: bold;
+            user-select: none;
+            text-align: right;
+            width: 2.125rem;
+            padding-top: 0.25rem;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Concealment System */
+        .row-wrapper {
+            position: relative;
+            margin: 0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .row-content {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: #f0dcb3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #444;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .overlay.hidden {
+            display: none;
+        }
+
+        .overlay-label {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
+        .pinyin {
+            font-size: 1.625rem;
+            font-weight: 600;
+        }
+
+        .english {
+            font-size: 1.5rem;
+        }
+
+        .hanzi {
+            font-size: 1.25rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        kbd {
+            background: #eee;
+            border-radius: 3px;
+            padding: 2px 5px;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            .sentence {
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+
+            .line-number {
+                width: auto;
+                text-align: left;
+                font-size: 0.8rem;
+                color: #bbb;
+                padding-top: 0;
+            }
+        }
+        @media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1e1b17;          /* warm dark background */
+        --text: #e6e1d9;        /* soft off-white text */
+        --accent: #e05a2a;      /* brighter accent for contrast */
+    }
+
+    html {
+        color-scheme: dark;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+    }
+
+    header {
+        background: #2a2621;
+    }
+
+    .subtitle {
+        color: #aaa;
+    }
+
+    select {
+        background: #2a2621;
+        color: var(--text);
+        border: 1px solid #444;
+    }
+
+    button {
+        background: #7f7740;
+        color: #fff;
+    }
+
+    button:hover {
+        background: #a89f85;
+    }
+
+    .transcript-container {
+        background: #2a2621;
+        box-shadow: none;
+    }
+
+    .sentence {
+        background: #1e1b17;
+        border-bottom: 1px solid #333;
+    }
+
+    .sentence.highlight {
+        background: #3a3425;
+        border-left: 5px solid var(--accent);
+    }
+
+    .line-number {
+        color: #777;
+    }
+
+    .overlay {
+        background: #5a4a2a;
+        color: #e6e1d9;
+    }
+
+    .footer {
+        color: #777;
+    }
+
+    kbd {
+        background: #333;
+        color: #ccc;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Mandarin Corner</h1>
+        <p class="subtitle">Translation Practice</p>
+    </header>
+
+    <div class="page">
+
+        <div class="controls">
+            <div>
+                <select id="lesson-select"></select>
+            </div>
+
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="conceal-hanzi" checked> Conceal Hanzi</label>
+                <label><input type="checkbox" id="conceal-pinyin" checked> Conceal Pinyin</label>
+                <label><input type="checkbox" id="conceal-english"> Conceal English</label>
+            </div>
+        </div>
+
+        <div class="transcript-container" id="transcript"></div>
+    </div>
+
+    <div class="btn-container">
+        <button id="btn-prev">💾 Previous</button>
+        <button id="btn-next">🎲 Next</button>
+    </div>
+
+    <div class="footer">
+        <kbd>←</kbd> <kbd>→</kbd> Navigate • <kbd>Space</kbd> Reveal All • Tap or Hover to Reveal
+    </div>
+
+    <script src="./lessons/lesson-text-articulateness.js"></script>
+    <script src="./lessons/lesson-text-simps.js"></script>
+    <script src="./lessons/lesson-text-friendship.js"></script>
+    <script src="./lessons/lesson-text-kungfu.js"></script>
+    <script src="./lessons/lesson-text-parents.js"></script>
+    <script src="./lessons/lesson-text-sexed.js"></script>
+
+    <script>
+        const lessonData = [
+            { name: "Articulateness", key: "articulateness", text: typeof lessonTextArticulateness !== 'undefined' ? lessonTextArticulateness : "" },
+            { name: "SIMPS", key: "simps", text: typeof lessonTextSimps !== 'undefined' ? lessonTextSimps : "" },
+            { name: "Friendship", key: "friendship", text: typeof lessonTextFriendship !== 'undefined' ? lessonTextFriendship : "" },
+            { name: "SexEd", key: "sexed", text: typeof lessonTextSexed !== 'undefined' ? lessonTextSexed : "" },
+            { name: "Parents", key: "parents", text: typeof lessonTextParents !== 'undefined' ? lessonTextParents : "" },
+            { name: "Kungfu", key: "kungfu", text: typeof lessonTextKungfu !== 'undefined' ? lessonTextKungfu : "" }
+        ];
+
+        let allSentences = [];
+        let currentIndex = 0;
+        let history = [];
+        let historyPointer = -1;
+
+        const transcriptEl = document.getElementById('transcript');
+        const lessonSelect = document.getElementById('lesson-select');
+        const concealHanzi = document.getElementById('conceal-hanzi');
+        const concealPinyin = document.getElementById('conceal-pinyin');
+        const concealEnglish = document.getElementById('conceal-english');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+
+        const sentencesAround = 3;
+
+        function parseLesson(text) {
+            if (!text || typeof text !== 'string') return [];
+            const lines = text.trim().split('\n');
+            return lines.map((line, index) => {
+                const parts = line.split('\t').map(p => p.trim());
+                return {
+                    id: index + 1,
+                    hanzi: parts[0] || '',
+                    pinyin: parts[1] || '',
+                    english: parts[2] || ''
+                };
+            }).filter(s => s.hanzi || s.pinyin || s.english);
+        }
+
+        function shouldConceal(field) {
+            if (field === 'hanzi') return concealHanzi.checked;
+            if (field === 'pinyin') return concealPinyin.checked;
+            if (field === 'english') return concealEnglish.checked;
+            return true;
+        }
+
+        function createRow(sent, field, label) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `row-wrapper`;
+
+            const content = document.createElement('div');
+            content.className = `row-content ${field}`;
+            content.textContent = sent[field] || '';
+
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            overlay.innerHTML = `<span class="overlay-label">${label}</span>`;
+
+            const reveal = () => overlay.classList.add('hidden');
+
+            if (shouldConceal(field)) {
+                wrapper.addEventListener('mouseenter', reveal);
+                overlay.addEventListener('click', reveal);
+                wrapper.appendChild(content);
+                wrapper.appendChild(overlay);
+            } else {
+                wrapper.appendChild(content);
+            }
+
+            return wrapper;
+        }
+
+        function renderVisibleSentences(centerIndex) {
+            currentIndex = centerIndex;
+            transcriptEl.innerHTML = '';
+
+            const { start, end } = (() => {
+                const s = Math.max(0, centerIndex - sentencesAround);
+                const e = Math.min(allSentences.length - 1, centerIndex + sentencesAround);
+                return { start: s, end: e };
+            })();
+
+            for (let i = start; i <= end; i++) {
+                const sent = allSentences[i];
+                const sentenceDiv = document.createElement('div');
+                sentenceDiv.className = `sentence ${i === centerIndex ? 'highlight' : 'lowlight'}`;
+
+                const lineNum = document.createElement('div');
+                lineNum.className = 'line-number';
+                lineNum.textContent = sent.id;
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'content';
+
+                if (sent.pinyin) contentDiv.appendChild(createRow(sent, 'pinyin', 'Pinyin'));
+                if (sent.english) contentDiv.appendChild(createRow(sent, 'english', 'English'));
+                if (sent.hanzi) contentDiv.appendChild(createRow(sent, 'hanzi', '汉字'));
+
+                sentenceDiv.appendChild(lineNum);
+                sentenceDiv.appendChild(contentDiv);
+                transcriptEl.appendChild(sentenceDiv);
+            }
+
+            const highlight = transcriptEl.querySelector('.highlight');
+            if (highlight) {
+                highlight.scrollIntoView({ behavior: 'instant', block: 'start' });
+                transcriptEl.scrollTop -= 3;
+            }
+        }
+
+        function pickRandomAndStore() {
+            if (allSentences.length === 0) return;
+            const randomIndex = Math.floor(Math.random() * allSentences.length);
+            if (historyPointer < history.length - 1) history = history.slice(0, historyPointer + 1);
+            history.push(randomIndex);
+            historyPointer++;
+            renderVisibleSentences(randomIndex);
+        }
+
+        function goBack() {
+            if (historyPointer > 0) {
+                historyPointer--;
+                renderVisibleSentences(history[historyPointer]);
+            }
+        }
+
+        function loadLesson(lesson) {
+            allSentences = parseLesson(lesson.text);
+            if (allSentences.length === 0) {
+                transcriptEl.innerHTML = `<p style="text-align:center; padding:3rem 1rem; color:#999;">No sentences loaded.</p>`;
+                return;
+            }
+            history = [];
+            historyPointer = -1;
+            pickRandomAndStore();
+        }
+
+        function populateLessonSelector() {
+            lessonSelect.innerHTML = '';
+            lessonData.forEach(lesson => {
+                if (lesson.text?.trim()) {
+                    const option = document.createElement('option');
+                    option.value = lesson.key;
+                    option.textContent = lesson.name;
+                    lessonSelect.appendChild(option);
+                }
+            });
+        }
+
+        function setupListeners() {
+            lessonSelect.addEventListener('change', () => {
+                const selected = lessonData.find(l => l.key === lessonSelect.value);
+                if (selected) loadLesson(selected);
+            });
+
+            [concealHanzi, concealPinyin, concealEnglish].forEach(cb => {
+                cb.addEventListener('change', () => {
+                    if (allSentences.length > 0) renderVisibleSentences(currentIndex);
+                });
+            });
+
+            btnNext.addEventListener('click', pickRandomAndStore);
+
+            btnPrev.addEventListener('click', goBack);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') pickRandomAndStore();
+                else if (e.key === 'ArrowLeft') goBack();
+                else if (e.key === ' ') {
+                    e.preventDefault();
+                    document.querySelectorAll('.overlay').forEach(ov => ov.classList.add('hidden'));
+                }
+            });
+        }
+
+        function init() {
+            populateLessonSelector();
+            setupListeners();
+
+            const first = lessonData.find(l => l.text?.trim());
+            if (first) {
+                lessonSelect.value = first.key;
+                loadLesson(first);
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+
+</html>
