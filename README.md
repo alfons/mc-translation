@@ -1,9 +1,10 @@
-# mc-translation
-Concept: eLearning design ideas for L2 translation practice
+# Mandarin Punch
 
-All texts copyright by Mandarin Corner (used here without permission)
+Concept study: An eLearning web-app for Mandarin L2 translation practice on sentence fragments, by Alfons Grabher (2026). 
+            
+All example texts copyright by Mandarin Corner (used here without permission) mandarincorner.org
 
-Hànyǔ Pīnyīn Spellchecking with strict compliance to GB/T 16159-2012 by Alfons Grabher, for the following texts:
+Hànyǔ Pīnyīn spelling with strict compliance to GB/T 16159-2012 by Alfons (coming soon). Texts in the works:
 
 - lesson-text-articulateness 
 
