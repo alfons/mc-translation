@@ -4,12 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandarin Corner • Sentence Trainer</title>
+    <title>Mandarin Punch</title>
     <style>
         :root {
-            --bg: #f8f5f0;
-            --text: #2c2c2c;
-            --accent: #c33711;
+            --bg: #c0c0c0;
+            --panel: #d4d0c8;
+            --surface: #ffffff;
+            --text: #000000;
+            --border-dark: #000000;
+            --border-mid: #808080;
+            --border-light: #ffffff;
+            --accent: #000080;
+            --highlight: #ffff00;
         }
 
         * {
@@ -18,179 +24,273 @@
             box-sizing: border-box;
         }
 
-        html {
-            font-size: 16px;
-            color-scheme: auto;
-        }
-
         html,
         body {
             height: 100%;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family:
+                "MS Sans Serif",
+                "Tahoma",
+                "Geneva",
+                sans-serif;
+
+            background:
+                repeating-linear-gradient(0deg,
+                    #bdbdbd 0px,
+                    #bdbdbd 2px,
+                    #c6c6c6 2px,
+                    #c6c6c6 4px);
+
+            color: var(--text);
+            line-height: 1.2;
+            padding: 0.5rem;
+        }
+
+        .outer-container {
+            max-width: 54rem;
+            margin: 0 auto;
         }
 
         .transcript-container {
             overscroll-behavior: contain;
         }
 
-        @font-face {
-            font-family: 'Crimson Text';
-            src: url('./fonts/CrimsonText-Regular.ttf') format('truetype');
-            font-weight: 400;
-            font-style: normal;
-            font-display: block;
-        }
-
-        @font-face {
-            font-family: 'Crimson Text';
-            src: url('./fonts/CrimsonText-SemiBold.ttf') format('truetype');
-            font-weight: 600;
-            font-style: normal;
-            font-display: block;
-        }
-
-        body {
-            font-family: 'Crimson Text', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.1;
-
-        }
+        /* =========================
+       WINDOW FRAME
+    ========================= */
 
         header {
-            background: white;
-            padding: 1.25rem;
-            text-align: center;
-            margin-bottom: 1rem;
+            background: var(--panel);
+
+            border-top: 0.125rem solid var(--border-light);
+            border-left: 0.125rem solid var(--border-light);
+            border-right: 0.125rem solid var(--border-dark);
+            border-bottom: 0.125rem solid var(--border-dark);
+
+            padding: 0.625rem;
+            margin-bottom: 0.5rem;
+
+            text-align: left;
         }
 
         h1 {
+            font-size: 2rem;
             color: var(--accent);
-            font-size: 2.3rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .subtitle {
-            color: #666;
-            margin-top: 0.5rem;
+            margin-top: 0.25rem;
+            color: #222;
+            font-size: 0.95rem;
         }
 
+        .page {
+            border: 0.125rem solid black;
+            background: var(--panel);
+            padding: 0.5rem;
+        }
+
+        /* =========================
+       CONTROLS
+    ========================= */
+
         .controls {
-            max-width: 50rem;
-            margin: 0 auto;
-            padding: 0.25rem;
             display: flex;
-            justify-content: center;
             flex-wrap: wrap;
+            gap: 12px;
             align-items: center;
-            gap: 1rem;
+
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+
+            background: var(--panel);
+
+            border-top: 0.125rem solid var(--border-light);
+            border-left: 0.125rem solid var(--border-light);
+            border-right: 0.125rem solid var(--border-dark);
+            border-bottom: 0.125rem solid var(--border-dark);
         }
 
         .checkbox-group {
             display: flex;
-            gap: 1.5rem;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
         label {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 1.1rem;
+            gap: 0.375rem;
             cursor: pointer;
+            user-select: none;
+            font-size: 0.95rem;
+        }
+
+        input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            accent-color: black;
         }
 
         select {
-            font-family: 'Crimson Text', sans-serif;
-            font-size: 1.1rem;
-            padding: 0.5rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
             background: white;
+            color: black;
+
+            font-family: inherit;
+            font-size: 0.95rem;
+
+            border: 0.125rem inset #808080;
+
+            padding: 0.25rem 0.375rem;
+
+            min-width: 180px;
         }
 
-        /* Centered Button */
+        /* =========================
+       BUTTONS
+    ========================= */
+
         .btn-container {
             display: flex;
             justify-content: center;
-            margin: 1.5rem 0;
-            gap: 0.75rem;
+            gap: 12px;
+            margin-top: 12px;
         }
 
         button {
-            background: #9C914F;
-            color: white;
-            border: none;
-            padding: 0.9rem 2.8rem;
-            font-size: 1.15rem;
-            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+
+            background: var(--panel);
+            color: black;
+
+            border-top: 0.125rem solid var(--border-light);
+            border-left: 0.125rem solid var(--border-light);
+            border-right: 0.125rem solid var(--border-dark);
+            border-bottom: 0.125rem solid var(--border-dark);
+
+            padding: 0.625rem 20px;
+
             cursor: pointer;
+            border-radius: 0;
+
+            min-width: 140px;
         }
 
         button:hover {
-            background: #BEB7A4;
+            background: #e0e0e0;
         }
 
+        button:active {
+            border-top: 0.125rem solid var(--border-dark);
+            border-left: 0.125rem solid var(--border-dark);
+            border-right: 0.125rem solid var(--border-light);
+            border-bottom: 0.125rem solid var(--border-light);
+
+            transform: translate(1px, 1px);
+        }
+
+        /* =========================
+       TRANSCRIPT WINDOW
+    ========================= */
+
         .transcript-container {
-            max-width: 900px;
-            margin: 1rem auto;
-            padding: 1rem 0;
             background: white;
-            border-radius: 0 0 12px 12px;
-            box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-            max-height: 420px;
+
+            border: 0.125rem inset #808080;
+
+            margin: 0 auto;
+
+            max-height: 320px;
             overflow-y: auto;
+
+            padding: 0;
         }
 
         .page {
-            padding: 0 1rem;
+            padding: 0.375rem;
         }
 
         .sentence {
-            padding: 1.1rem 1rem;
-            border-bottom: 1px solid #eee;
             display: flex;
-            gap: 1rem;
-            background: var(--bg);
+            gap: 12px;
+
+            padding: 0.625rem;
+
+            border-bottom: 1px solid black;
+
+            background: white;
         }
 
         .sentence:last-child {
             border-bottom: none;
-            padding-bottom: 10rem;
+            padding-bottom: 120px;
         }
 
         .sentence.lowlight {
-            opacity: 0.5;
+            opacity: 0.55;
         }
 
         .sentence.highlight {
-            background: #fff8c3;
-            border-left: 5px solid var(--accent);
+            background: var(--highlight);
+
+            border-left: 0.5rem solid red;
+
+            opacity: 1;
         }
 
+        /* =========================
+       LINE NUMBERS
+    ========================= */
+
         .line-number {
+            width: 42px;
             flex-shrink: 0;
-            color: #999;
+
             font-weight: bold;
-            user-select: none;
             text-align: right;
-            width: 2.125rem;
-            padding-top: 0.25rem;
+
+            color: #444;
+
+            border-right: 1px solid #999;
+            padding-right: 0.5rem;
+
+            user-select: none;
         }
+
+        /* =========================
+       CONTENT
+    ========================= */
 
         .content {
             flex: 1;
             display: flex;
             flex-direction: column;
+            gap: 0.375rem;
         }
 
-        /* Concealment System */
         .row-wrapper {
             position: relative;
-            margin: 0;
-            border-radius: 4px;
-            overflow: hidden;
+
+            border: 1px solid black;
+
+            background: #f4f4f4;
         }
 
         .row-content {
-            padding: 0.75rem 0;
+            padding: 0.5rem;
+            min-height: 42px;
+
             display: flex;
             align-items: center;
         }
@@ -198,14 +298,25 @@
         .overlay {
             position: absolute;
             inset: 0;
-            background: #f0dcb3;
+
+            background:
+                repeating-linear-gradient(45deg,
+                    #999,
+                    #999 4px,
+                    #777 4px,
+                    #777 8px);
+
+            color: white;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #444;
-            font-weight: 600;
+
+            font-weight: bold;
+            letter-spacing: 1px;
+
             cursor: pointer;
-            user-select: none;
+
             z-index: 2;
         }
 
@@ -214,190 +325,254 @@
         }
 
         .overlay-label {
-            font-size: 0.95rem;
-            opacity: 0.85;
+            font-size: 0.8rem;
+            text-transform: uppercase;
         }
 
+        /* =========================
+       TYPOGRAPHY
+    ========================= */
+
         .pinyin {
-            font-size: 1.625rem;
-            font-weight: 600;
+            font-size: 1.45rem;
+            font-weight: bold;
         }
 
         .english {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .hanzi {
-            font-size: 1.25rem;
+            font-size: 1.4rem;
+            font-weight: bold;
         }
 
+        /* =========================
+       FOOTER
+    ========================= */
+
         .footer {
+            margin-top: 0.625rem;
+
+            padding: 0.5rem;
+
             text-align: center;
-            padding: 1.5rem;
-            color: #888;
-            font-size: 0.95rem;
+
+            background: var(--panel);
+
+            border-top: 0.125rem solid var(--border-light);
+            border-left: 0.125rem solid var(--border-light);
+            border-right: 0.125rem solid var(--border-dark);
+            border-bottom: 0.125rem solid var(--border-dark);
+
+            font-size: 0.9rem;
+        }
+
+        .footer-mobile {
+            display: none;
+        }
+
+        .footer-not-mobile {
+            display: block;
+        }
+        
+        .copyright {
+            margin-top: 0.625rem;
+            font-size: 0.9rem;
+            text-align: center;
+            opacity: 0.5;
         }
 
         kbd {
-            background: #eee;
-            border-radius: 3px;
-            padding: 2px 5px;
-            color: #666;
+            display: inline-block;
+
+            background: white;
+
+            border-top: 0.125rem solid var(--border-light);
+            border-left: 0.125rem solid var(--border-light);
+            border-right: 0.125rem solid var(--border-dark);
+            border-bottom: 0.125rem solid var(--border-dark);
+
+            padding: 0.125rem 0.375rem;
+
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: bold;
+
+            margin: 0 0.125rem;
+        }
+
+        /* =========================
+       SCROLLBAR (WEBKIT)
+    ========================= */
+
+        ::-webkit-scrollbar {
+            width: 18px;
+            height: 18px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #c0c0c0;
+            border: 1px solid black;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #9a9a9a;
+            border: 0.125rem outset #d4d0c8;
+        }
+
+        ::-webkit-scrollbar-button {
+            background: #c0c0c0;
+            border: 0.125rem outset #d4d0c8;
+        }
+
+        /* =========================
+       MOBILE
+    ========================= */
+
+        .label-short {
+            display: none;
         }
 
         @media (max-width: 600px) {
 
-            .page {
-                padding: 0 0.5rem;
+            body {
+                padding: 0.25rem;
             }
 
-            header {
-                padding: 0.25rem;
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .label-full {
+                display: none;
+            }
+
+            .label-short {
+                display: inline;
+                font-weight: bold;
             }
 
             .controls {
-                padding: 0.25rem;
-                gap: 0.25rem;
+                gap: 1rem;
             }
 
             .sentence {
                 flex-direction: column;
-                gap: 0;
+                gap: 0.375rem;
             }
 
             .line-number {
                 width: auto;
                 text-align: left;
-                font-size: 0.8rem;
-                color: #bbb;
-                padding-top: 0;
+                border-right: none;
+                border-bottom: 1px solid #999;
+                padding-bottom: 0.25rem;
             }
 
             .pinyin {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                line-height: 1.25;
             }
 
             .english {
-                font-size: 1.75rem;
+                font-size: 1.45rem;
+                line-height: 1.3;
             }
 
             .hanzi {
-                font-size: 1.5rem;
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .row-content {
+                padding: 14px 12px;
+                min-height: 64px;
             }
 
             .transcript-container {
-                max-height: 300px;
-            }
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #1e1b17;
-                /* warm dark background */
-                --text: #e6e1d9;
-                /* soft off-white text */
-                --accent: #e05a2a;
-                /* brighter accent for contrast */
-            }
-
-            html {
-                color-scheme: dark;
-            }
-
-            body {
-                background: var(--bg);
-                color: var(--text);
-            }
-
-            header {
-                background: #2a2621;
-            }
-
-            .subtitle {
-                color: #aaa;
-            }
-
-            select {
-                background: #2a2621;
-                color: var(--text);
-                border: 1px solid #444;
+                max-height: 380px;
             }
 
             button {
-                background: #7f7740;
-                color: #fff;
+                min-width: unset;
+                width: 50%;
             }
 
-            button:hover {
-                background: #a89f85;
+            .btn-container {
+                fflex-direction: column;
             }
 
-            .transcript-container {
-                background: #2a2621;
-                box-shadow: none;
+            .footer-mobile {
+                display: block;
             }
 
-            .sentence {
-                background: #1e1b17;
-                border-bottom: 1px solid #333;
+            .footer-not-mobile {
+                display: none;
             }
 
-            .sentence.highlight {
-                background: #3a3425;
-                border-left: 5px solid var(--accent);
-            }
-
-            .line-number {
-                color: #777;
-            }
-
-            .overlay {
-                background: #5a4a2a;
-                color: #e6e1d9;
-            }
-
-            .footer {
-                color: #777;
-            }
-
-            kbd {
-                background: #333;
-                color: #ccc;
-            }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>Mandarin Corner</h1>
-        <p class="subtitle">Translation Practice</p>
-    </header>
 
-    <div class="page">
+    <div class="outer-container">
 
-        <div class="controls">
-            <div>
-                <select id="lesson-select"></select>
+        <header>
+            <h1>Mandarin Punch</h1>
+            <p class="subtitle">Sentence Fragment Translation Trainer</p>
+        </header>
+
+        <div class="page">
+
+            <div class="controls">
+                <div>
+                    <select id="lesson-select"></select>
+                </div>
+
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="show-pinyin">
+                        <span class="label-full">Pinyin</span>
+                        <span class="label-short">P</span>
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="show-english" checked>
+                        <span class="label-full">English</span>
+                        <span class="label-short">E</span>
+                    </label>
+
+                    <label>
+                        <input type="checkbox" id="show-hanzi">
+                        <span class="label-full">Hanzi</span>
+                        <span class="label-short">H</span>
+                    </label>
+                </div>
             </div>
 
-            <div class="checkbox-group">
-                <label><input type="checkbox" id="conceal-hanzi" checked> Conceal Hanzi</label>
-                <label><input type="checkbox" id="conceal-pinyin" checked> Conceal Pinyin</label>
-                <label><input type="checkbox" id="conceal-english"> Conceal English</label>
+            <div class="transcript-container" id="transcript"></div>
+
+            <div class="btn-container">
+                <button id="btn-prev">💾 Previous</button>
+                <button id="btn-next">🎲 Next</button>
             </div>
         </div>
 
-        <div class="transcript-container" id="transcript"></div>
-
-        <div class="btn-container">
-            <button id="btn-prev">💾 Previous</button>
-            <button id="btn-next">🎲 Next</button>
+        <div class="footer footer-not-mobile">
+            <kbd>←</kbd> <kbd>→</kbd> Navigate • <kbd>Space</kbd> Reveal All • Mouse-Over to Reveal
         </div>
-    </div>
 
-    <div class="footer">
-        <kbd>←</kbd> <kbd>→</kbd> Navigate • <kbd>Space</kbd> Reveal All • Tap or Hover to Reveal
+        <div class="footer footer-mobile">
+            Tap to Reveal
+        </div>
+
+        <div class="copyright">
+            Concept study: An eLearning app for L2 translation practice, by Alfons Grabher (2026).<br>
+            Example texts copyright by Mandarin Corner (used without permission) mandarincorner.org<br>
+            Hànyǔ Pīnyīn spelling with strict compliance to GB/T 16159-2012 by Alfons (coming soon).
+        </div>
     </div>
 
     <script src="./lessons/lesson-text-articulateness.js"></script>
@@ -424,9 +599,9 @@
 
         const transcriptEl = document.getElementById('transcript');
         const lessonSelect = document.getElementById('lesson-select');
-        const concealHanzi = document.getElementById('conceal-hanzi');
-        const concealPinyin = document.getElementById('conceal-pinyin');
-        const concealEnglish = document.getElementById('conceal-english');
+        const showHanzi = document.getElementById('show-hanzi');
+        const showPinyin = document.getElementById('show-pinyin');
+        const showEnglish = document.getElementById('show-english');
         const btnPrev = document.getElementById('btn-prev');
         const btnNext = document.getElementById('btn-next');
 
@@ -447,9 +622,9 @@
         }
 
         function shouldConceal(field) {
-            if (field === 'hanzi') return concealHanzi.checked;
-            if (field === 'pinyin') return concealPinyin.checked;
-            if (field === 'english') return concealEnglish.checked;
+            if (field === 'hanzi') return !showHanzi.checked;
+            if (field === 'pinyin') return !showPinyin.checked;
+            if (field === 'english') return !showEnglish.checked;
             return true;
         }
 
@@ -565,7 +740,7 @@
                 if (selected) loadLesson(selected);
             });
 
-            [concealHanzi, concealPinyin, concealEnglish].forEach(cb => {
+            [showHanzi, showPinyin, showEnglish].forEach(cb => {
                 cb.addEventListener('change', () => {
                     if (allSentences.length > 0) renderVisibleSentences(currentIndex);
                 });
