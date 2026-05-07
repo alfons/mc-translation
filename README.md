@@ -1,6 +1,6 @@
 # Mandarin Punch
 
-Concept study: An eLearning web-app for Mandarin L2 translation practice on sentence fragments, by Alfons Grabher (2026). 
+Concept study: An eLearning web interface for Mandarin L2 translation practice on sentence fragments, by Alfons Grabher (2026). 
             
 All example texts copyright by Mandarin Corner (used here without permission) mandarincorner.org
 
