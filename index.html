@@ -47,6 +47,7 @@
         html,
         body {
             height: 100%;
+            touch-action: manipulation;
         }
 
         html {
@@ -711,9 +712,10 @@
         </div>
 
         <div class="copyright">
-            Concept study for an eLearning web interface for L2 translation practice, by Alfons Grabher (2026) • 
-            Example texts copyright by Mandarin Corner (used without asking permission) mandarincorner.org • 
-            Hànyǔ Pīnyīn spelling with strict compliance to GB/T 16159-2012 by Alfons (coming soon).
+            Concept study for an eLearning web interface for L2 translation practice, by Alfons Grabher (2026) •
+            Example texts (used without asking permission) copyright by Mandarin Corner, mandarincorner.org •
+            凱蒂瑜伽 Flow With Katie, Youtube @flowwithkatie
+            Hànyǔ Pīnyīn spelling with compliance to GB/T 16159-2012 by Alfons (coming soon).
         </div>
     </div>
 
@@ -723,15 +725,17 @@
     <script src="./lessons/lesson-text-kungfu.js"></script>
     <script src="./lessons/lesson-text-parents.js"></script>
     <script src="./lessons/lesson-text-sexed.js"></script>
+    <script src="./lessons/lesson-text-10minflow.js"></script>
 
     <script>
         const lessonData = [
-            { name: "Articulateness", key: "articulateness", text: typeof lessonTextArticulateness !== 'undefined' ? lessonTextArticulateness : "" },
-            { name: "SIMP", key: "simps", text: typeof lessonTextSimps !== 'undefined' ? lessonTextSimps : "" },
-            { name: "Friendship", key: "friendship", text: typeof lessonTextFriendship !== 'undefined' ? lessonTextFriendship : "" },
-            { name: "SexEd", key: "sexed", text: typeof lessonTextSexed !== 'undefined' ? lessonTextSexed : "" },
-            { name: "Parents", key: "parents", text: typeof lessonTextParents !== 'undefined' ? lessonTextParents : "" },
-            { name: "Kungfu", key: "kungfu", text: typeof lessonTextKungfu !== 'undefined' ? lessonTextKungfu : "" }
+            { name: "MC - Articulateness", key: "articulateness", text: typeof lessonTextArticulateness !== 'undefined' ? lessonTextArticulateness : "" },
+            { name: "MC - SIMP", key: "simps", text: typeof lessonTextSimps !== 'undefined' ? lessonTextSimps : "" },
+            { name: "MC - Friendship", key: "friendship", text: typeof lessonTextFriendship !== 'undefined' ? lessonTextFriendship : "" },
+            { name: "MC - SexEd", key: "sexed", text: typeof lessonTextSexed !== 'undefined' ? lessonTextSexed : "" },
+            { name: "MC - Parents", key: "parents", text: typeof lessonTextParents !== 'undefined' ? lessonTextParents : "" },
+            { name: "MC - Kungfu", key: "kungfu", text: typeof lessonTextKungfu !== 'undefined' ? lessonTextKungfu : "" },
+            { name: "YK - 10 min flow", key: "10mflow", text: typeof lessonText10minflow !== 'undefined' ? lessonText10minflow : "" },
         ];
 
         let allSentences = [];
