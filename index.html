@@ -330,6 +330,19 @@
             font-size: 0.9rem;
         }
 
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.25rem;
+            border: 0.0625rem solid currentColor;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
         .copyright {
             margin: 0.625rem 1.5rem 0 1.5rem;
             font-size: 0.9rem;
@@ -340,15 +353,12 @@
         kbd {
             display: inline-block;
             background: var(--surface);
-            border-top: 0.125rem solid var(--border-light);
-            border-left: 0.125rem solid var(--border-light);
-            border-right: 0.125rem solid var(--border-dark);
-            border-bottom: 0.125rem solid var(--border-dark);
             padding: 0.125rem 0.375rem;
             font-family: inherit;
             font-size: 0.85rem;
-            font-weight: bold;
             margin: 0 0.125rem;
+            border: 0.0625rem solid var(--text);
+            border-radius: 0.125rem;
         }
 
         /* =========================
@@ -514,7 +524,6 @@
             .controls,
             .footer,
             button,
-            kbd,
             .page {
                 box-shadow:
                     inset 1px 1px 0 var(--border-light),
@@ -664,7 +673,7 @@
 
         <header>
             <h1>Mandarin Punch</h1>
-            <p class="subtitle">Sentence Fragment Translation Trainer</p>
+            <p class="subtitle">Translation Training with Youtube Subtitles</p>
         </header>
 
         <div class="page">
@@ -704,16 +713,19 @@
         </div>
 
         <div class="footer footer-not-mobile">
-           ⓘ <kbd>←</kbd> <kbd>→</kbd> Navigate • <kbd>Space</kbd> Reveal All • Mouse-Over to Reveal
+            <span class="info-icon">i</span>
+            <kbd>←</kbd> <kbd>→</kbd> Navigate • <kbd>Space</kbd> Reveal All • Mouse-Over to Reveal
         </div>
 
         <div class="footer footer-mobile">
-           ⓘ Tap to Reveal
+            <span class="info-icon">i</span>
+            Tap to Reveal
         </div>
 
         <div class="copyright">
             Concept study for an eLearning web interface for L2 translation practice, by Alfons Grabher (2026) •
-            Example texts (used without asking permission) copyright by Mandarin Corner, mandarincorner.org, Youtube @mandarincorner2 •
+            Example texts (used without asking permission) copyright by Mandarin Corner, mandarincorner.org, Youtube
+            @mandarincorner2 •
             凱蒂瑜伽 Flow With Katie, Youtube @flowwithkatie
             Hànyǔ Pīnyīn spelling with compliance to GB/T 16159-2012 by Alfons (coming soon).
         </div>
